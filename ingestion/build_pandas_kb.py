@@ -42,10 +42,10 @@ def convert_to_md(source_path : Path) -> str:
     suffix = source_path.suffix.lower()
 
     if suffix == ".rst":
-        convert_rst_to_md
+        return convert_rst_to_md(source_path)
 
     elif suffix == ".ipynb":
-        convert_ipynb_to_md
+        return convert_ipynb_to_md(source_path)
 
     else:
         raise ValueError(f'Unsupported file type: {suffix}')
@@ -75,7 +75,7 @@ def main():
                 if destination.exists():
                     continue
 
-                raw_md = convert_rst_to_md(source_file)
+                raw_md = convert_to_md(source_file)
                 cleaned_md = clean_markdown(raw_md)
 
                 destination.parent.mkdir(parents=True, exist_ok=True)
