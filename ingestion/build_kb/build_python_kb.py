@@ -1,13 +1,14 @@
 # python script to convert .rst files to .md and store them in knowledge_base for python documentation
-# use "python -m ingestion.build_python_md" in terminal to run
+# use "python -m ingestion.build_kb.build_python_kb" in terminal to run
 
 from pathlib import Path
 import pypandoc
 from tqdm import tqdm
 from ingestion.md_cleaner import clean_markdown
+from ingestion.config import BASE_DIR
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent --> imported from congif
 CPYTHON_DOCS = ( BASE_DIR / "cloned_repo" / "python" / "cpython" / "Doc" )
 OUTPUT_DIR = ( BASE_DIR / "knowledge_base" / "python" )
 SOURCE_DIRS = [ "tutorial", "library" ]

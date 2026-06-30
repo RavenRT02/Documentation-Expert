@@ -1,12 +1,16 @@
+# python script to convert .rst files and ipynb files to .md and store them in knowledge_base for pandas documentation
+# use "python -m ingestion.build_kb.build_pandas_kb" in terminal to run
+
 from pathlib import Path
 from tqdm import tqdm
 import pypandoc
 from ingestion.md_cleaner import clean_markdown
 import nbformat
 from nbconvert import MarkdownExporter
+from ingestion.config import BASE_DIR
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent --> impoted from config
 PANDAS_SOURCE = BASE_DIR / "cloned_repo" / "pandas" / "doc" / "source"
 OUTPUT_DIR = BASE_DIR / "knowledge_base" / "pandas"
 SOURCE_DIRS = [ "reference", "user_guide" ]

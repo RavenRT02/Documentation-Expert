@@ -1,8 +1,9 @@
 from pathlib import Path
 from collections import defaultdict
+from config import KB_PATH
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-KB_PATH = BASE_DIR / "knowledge_base"
+# BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# KB_PATH = BASE_DIR / "knowledge_base"                  ----> imported from congif
 
 def build_metadata(file_path: str) -> dict:
     """Function to build metadata for chunks
