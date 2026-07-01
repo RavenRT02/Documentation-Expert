@@ -15,7 +15,9 @@ def build_vector_store(chunks: list[Document]) -> Chroma:
     # persist_directory → where the database lives on disk
     # collection_name → which collection inside that database
 
+    print("Loading embedding model...")
     embeddings = load_embeddings()
+    print("Embedding model loaded.")
 
     if VECTOR_DB_PATH.exists():
         shutil.rmtree(VECTOR_DB_PATH)     # rmtree -> remove tree - deletes the directory and everything inside it recursively
@@ -24,11 +26,12 @@ def build_vector_store(chunks: list[Document]) -> Chroma:
 
     # take the chunks, use the embeddings to embed them, use persist_directory as the location to save the collection, 
     # and use collection_name as the collection's name
+    print(f"Embedding and indexing {len(chunks)} chunks, This may take upto 30 minutes...")
     vector_store = Chroma.from_documents(
         documents=chunks, embedding=embeddings, 
         persist_directory=VECTOR_DB_PATH, collection_name=COLLECTION_NAME
         )
-    print(f'vector_store created with {len(chunks)} chunks')
+    print(f'vector_store created successfully')
 
     return vector_store
 
