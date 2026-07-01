@@ -12,4 +12,4 @@ cloned_repo
 
 models/
 
-vector_db/ 
+vector_store/chroma_db
