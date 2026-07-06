@@ -1,5 +1,5 @@
 from retrieval.retriever import retrieve
-from ingestion.config import BASE_DIR
+from config import BASE_DIR
 
 output_file = BASE_DIR / "retrieval_results.md"
 

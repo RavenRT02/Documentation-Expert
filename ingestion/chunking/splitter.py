@@ -1,5 +1,5 @@
 from langchain_text_splitters import MarkdownHeaderTextSplitter, RecursiveCharacterTextSplitter
-from ingestion.config import HEADERS_TO_SPLIT_ON, CHUNK_SIZE, CHUNK_OVERLAP
+from config import HEADERS_TO_SPLIT_ON, CHUNK_SIZE, CHUNK_OVERLAP
 
 
 

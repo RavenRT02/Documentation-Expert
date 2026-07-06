@@ -1,7 +1,7 @@
 from langchain_core.documents import Document
 from langchain_chroma import Chroma
 from ingestion.embedding.embedder import load_embeddings
-from ingestion.config import VECTOR_DB_PATH, COLLECTION_NAME
+from config import VECTOR_DB_PATH, COLLECTION_NAME
 import shutil
 
 

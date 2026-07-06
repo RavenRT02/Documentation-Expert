@@ -2,7 +2,7 @@ from pathlib import Path
 from tqdm import tqdm
 from langchain_core.documents import Document
 from ingestion.chunking.metadata import build_metadata
-from ingestion.config import KB_PATH
+from config import KB_PATH
 
 
 # BASE_DIR = Path(__file__).resolve().parent.parent.parent

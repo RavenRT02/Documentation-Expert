@@ -1,5 +1,5 @@
 from langchain_huggingface import HuggingFaceEmbeddings
-from ingestion.config import EMBEDDING_MODEL
+from config import EMBEDDING_MODEL
 
 
 def load_embeddings():

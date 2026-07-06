@@ -5,7 +5,7 @@ from pathlib import Path
 import pypandoc
 from tqdm import tqdm
 from ingestion.md_cleaner import clean_markdown
-from ingestion.config import BASE_DIR
+from config import BASE_DIR
 
 
 # BASE_DIR = Path(__file__).resolve().parent.parent --> imported from congif

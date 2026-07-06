@@ -7,7 +7,7 @@ import pypandoc
 from ingestion.md_cleaner import clean_markdown
 import nbformat
 from nbconvert import MarkdownExporter
-from ingestion.config import BASE_DIR
+from config import BASE_DIR
 
 
 # BASE_DIR = Path(__file__).resolve().parent.parent --> impoted from config

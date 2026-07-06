@@ -1,3 +1,4 @@
+# virtual environment
 .venv
 
 __pycache__/
@@ -12,4 +13,11 @@ cloned_repo
 
 models/
 
+# vector database
 vector_store/chroma_db
+
+# prompts 
+prompt_summary.md
+
+# environment variables
+.env
