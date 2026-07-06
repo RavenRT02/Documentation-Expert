@@ -104,7 +104,7 @@ def generate_response(tokenizer, model, question: str, context: str, history: st
 
     # torch.inference_mode() is specifically designed for inference.
     # It disables gradient tracking and a few additional bookkeeping operations, making it slightly faster and more memory-efficient.
-    with torch.interface_mode():
+    with torch.inference_mode():
         # Temperature parameter is not used since do_sample is set to False.
         outputs = model.generate(inputs, max_new_tokens=max_new_tokens,do_sample=False)
 
