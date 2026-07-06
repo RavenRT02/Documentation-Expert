@@ -38,4 +38,3 @@ COLLECTION_NAME = "documentation_expert"
 # Generation defaults
 
 MAX_NEW_TOKENS = 512
-TEMPERATURE = 0.1

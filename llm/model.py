@@ -73,15 +73,14 @@ def load_model(model_name):
 
     return tokenizer, model
 
-
-# change context: List[Document] after testing
+# context is str since the list[Document] will be formatted by other fucntions to provide str
 def generate_response(tokenizer, model, question: str, context: str, history: str | None=None, 
-                      max_new_tokens=MAX_NEW_TOKENS, temperature=TEMPERATURE):
+                      max_new_tokens=MAX_NEW_TOKENS):
     
     """
     Gets system_prompt and user_prompt to build messages, finds location of model parameters and stores is as device,
     uses apply_chat_template to model tokenizer to create tensor objects that are placed on device,
-    model generates output based on inputs, max_new_tokens and temperature,
+    model generates output based on inputs and max_new_tokens,
     The output is parsed and the response is returned.
     """
     
@@ -100,14 +99,22 @@ def generate_response(tokenizer, model, question: str, context: str, history: st
 
     # tokenizer.apply_chat_template takes the messages and modifies it to a structure with additional tokens that 
     # the chosen model can understand and the returned python list is converted to tensors which the model can use directly
-    inputs = tokenizer.apply_chat_template(messages, return_tensors="pt", add_generation_prompt=True).to(device)
+    # return_dict=True provides attention_mask and not just input_ids from tokenizer 
+    inputs = tokenizer.apply_chat_template(messages, tokenize=True, return_dict=True, 
+                                           return_tensors="pt", add_generation_prompt=True)
+    
+    # Takes k,v in inputs.items(), and turns them into tensor which device can use 
+    # k = "input_ids" and v = tensor(...) becomes "input_ids": tensor(...).to(device)
+    # k = "attention_mask" and v = "attention_mask": tensor(...).to(device)
+    # dict comprehension used so we can unpack the dict in outputs with **inputs
+    inputs = {k : v.to(device) for k, v in inputs.items()}
 
 
     # torch.inference_mode() is specifically designed for inference.
     # It disables gradient tracking and a few additional bookkeeping operations, making it slightly faster and more memory-efficient.
     with torch.inference_mode():
         # Temperature parameter is not used since do_sample is set to False.
-        outputs = model.generate(inputs, max_new_tokens=max_new_tokens,do_sample=False)
+        outputs = model.generate(**inputs, max_new_tokens=max_new_tokens,do_sample=False)
 
     response = tokenizer.decode(outputs[0][inputs.shape[-1]:], skip_special_tokens=True)
 
