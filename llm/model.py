@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import torch
 from huggingface_hub import login
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-from config import MAX_NEW_TOKENS, TEMPERATURE
+from config import MAX_NEW_TOKENS
 from llm.prompt import get_system_prompt, get_user_prompt
 
 
