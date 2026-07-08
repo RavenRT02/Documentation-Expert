@@ -1,14 +1,15 @@
 from langchain_core.documents import Document
 from ingestion.embedding.vector_store import load_vector_store
+from pathlib import Path
 
 # libraries -> parameter name, list[str] | None -> is a list of str or None, = None -> default value
-def retrieve(query: str, k: int = 5, libraries: list[str] | None = None) -> list[Document]:
+def retrieve(query: str, k: int = 5, libraries: list[str] | None = None, db_path: str | Path | None = None) -> list[Document]:
     """
     Retrieves the most relevant chunks based on the query
     and selected libraries based on similarity_search
     """
 
-    vector_store = load_vector_store()
+    vector_store = load_vector_store(db_path)
 
     # dict to unpack later using ** operator. Trailing , after k to support more keyword arguments
     search_kwargs = {

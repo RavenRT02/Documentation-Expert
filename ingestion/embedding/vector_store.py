@@ -3,6 +3,7 @@ from langchain_chroma import Chroma
 from ingestion.embedding.embedder import load_embeddings
 from config import VECTOR_DB_PATH, COLLECTION_NAME
 import shutil
+from pathlib import Path
 
 
 
@@ -37,17 +38,22 @@ def build_vector_store(chunks: list[Document]) -> Chroma:
 
 
 
-def load_vector_store() -> Chroma:
+def load_vector_store(db_path : str | Path | None = None) -> Chroma:
     """
     Loads the existing vector store and the corresponding embeddings
     """
 
-    if not VECTOR_DB_PATH.exists():
-        raise FileNotFoundError("vector_store not found, build vector_store to use this function")
+    if db_path is None:
+        db_path = VECTOR_DB_PATH   # use path from config.py in case of no provided path
+    else:
+        db_path = Path(db_path)    # colab compatibility , convert str to path
+    
+    if not db_path.exists():
+        raise FileNotFoundError(f"vector_store not found at {db_path}, build vector_store to use this function if running locally")
 
     embeddings = load_embeddings()
 
     # using Chrome and not Chroma.from_documents() as we are opening an existing vector_store and not creating a new one
-    vector_store = Chroma(persist_directory=VECTOR_DB_PATH, collection_name=COLLECTION_NAME, embedding_function=embeddings)
+    vector_store = Chroma(persist_directory=str(db_path), collection_name=COLLECTION_NAME, embedding_function=embeddings)
 
     return vector_store
