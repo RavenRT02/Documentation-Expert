@@ -3,13 +3,10 @@ from config import LLM_MODEL
 
 def main():
 
-    # Huggingface login performed in colab notebook using 
-    # HF_TOKEN must be present in secrets, run the lines below in colab cell
-    # from google.colab import userdata
-    # login_huggingface(userdata.get("HF_TOKEN"))
+    # To run on colab check test_generation.ipynb file
 
     # if being run locally import login_huggingface from llm.model 
-    # HF_TOKEN must be present in .env file, run the line below
+    # HF_TOKEN must be present in .env file, remove # from the line below
     # login_huggingface()
 
     tokenizer, model = load_model(LLM_MODEL)
@@ -41,19 +38,4 @@ if __name__ == '__main__':
     main()
 
 
-# colab cells for testing
-
-# cell 1 : !git clone link
-
-# cell 2 : 
-# %cd Documentation-Expert
-# !pip install -q -r requirements.txt
-
-# cell 3 : 
-# from google.colab import userdata
-# from llm.model import login_huggingface
-# login_huggingface(userdata.get("HF_TOKEN"))
-
-# cell 4 :
-# from testing.test_generation import main
-# main()
+# run using - python -m testing.test_generation
