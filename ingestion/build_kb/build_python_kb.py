@@ -4,7 +4,7 @@
 from pathlib import Path
 import pypandoc
 from tqdm import tqdm
-from ingestion.md_cleaner import clean_markdown
+from utils.md_cleaner import clean_markdown
 from config import BASE_DIR
 
 
