@@ -109,6 +109,9 @@ def generate_response(tokenizer, model, question: str, context: str, history: st
     # dict comprehension used so we can unpack the dict in outputs with **inputs
     inputs = {k : v.to(device) for k, v in inputs.items()}
 
+    # input is no longer a tensor , it is a dict which does not have .shape attribute for decode
+    input_length = inputs["input_ids"].shape[-1]
+
 
     # torch.inference_mode() is specifically designed for inference.
     # It disables gradient tracking and a few additional bookkeeping operations, making it slightly faster and more memory-efficient.
@@ -116,6 +119,6 @@ def generate_response(tokenizer, model, question: str, context: str, history: st
         # Temperature parameter is not used since do_sample is set to False.
         outputs = model.generate(**inputs, max_new_tokens=max_new_tokens,do_sample=False)
 
-    response = tokenizer.decode(outputs[0][inputs.shape[-1]:], skip_special_tokens=True)
+    response = tokenizer.decode(outputs[0][input_length:], skip_special_tokens=True)
 
     return response.strip()
