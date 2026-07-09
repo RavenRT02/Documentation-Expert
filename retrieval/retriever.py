@@ -2,7 +2,7 @@ from langchain_core.documents import Document
 
 
 # libraries -> parameter name, list[str] | None -> is a list of str or None, = None -> default value
-def retrieve(vector_store, query: str, k: int = 5, libraries: list[str] | None = None) -> list[Document]:
+def retrieve(vector_store, query: str, k: int, libraries: list[str] | None = None) -> list[Document]:
     """
     Retrieves the most relevant chunks based on the query
     and selected libraries based on similarity_search

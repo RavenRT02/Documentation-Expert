@@ -2,7 +2,7 @@ from llm.model import load_model, generate_response
 from ingestion.embedding.vector_store import load_vector_store
 from retrieval.retriever import retrieve
 from utils.context_formatter import format_context
-from config import LLM_MODEL
+from config import LLM_MODEL, RETRIEVAL_K
 
 
 class RAGPipeline:
@@ -24,7 +24,7 @@ class RAGPipeline:
         queries llm to answer user question
         """
 
-        documents = retrieve(vector_store=self.vector_store, query=question, libraries=libraries)
+        documents = retrieve(vector_store=self.vector_store, query=question, K= RETRIEVAL_K, libraries=libraries)
         context = format_context(documents)
         llm_response = generate_response(self.tokenizer, self.model, question=question, context=context, history=history)
         

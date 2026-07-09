@@ -38,3 +38,9 @@ COLLECTION_NAME = "documentation_expert"
 # Generation defaults
 
 MAX_NEW_TOKENS = 512
+
+
+# Retrieval
+
+RETRIEVAL_K = 15
+RERANK_TOP_K = 7
