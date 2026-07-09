@@ -55,5 +55,6 @@ def load_vector_store(db_path : str | Path | None = None) -> Chroma:
 
     # using Chrome and not Chroma.from_documents() as we are opening an existing vector_store and not creating a new one
     vector_store = Chroma(persist_directory=str(db_path), collection_name=COLLECTION_NAME, embedding_function=embeddings)
+    print("Vector_store loaded successfully !")
 
     return vector_store

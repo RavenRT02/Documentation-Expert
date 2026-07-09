@@ -57,6 +57,7 @@ def load_model(model_name):
     )
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
+    print("Tokenizer loaded successfully !")
 
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
@@ -65,6 +66,7 @@ def load_model(model_name):
     # The Transformers library automatically detects available hardware and decides where each layer should go. (GPU or CPU or both)
     # If device_map is not set, it loads the layers onto CPU unless model.to("cuda") is specified somewhere
     model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", quantization_config=quantization_config)
+    print("Model loaded successfully !")
     # print(model.hf_device_map) - uncomment to check where the model is placed for testing "{'': 0}" is Cuda 0
 
     # .eval() one of Pytorch modes used for inference (other is training .train())
