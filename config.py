@@ -19,7 +19,7 @@ HEADERS_TO_SPLIT_ON = [
 
 # Path details
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 KB_PATH = BASE_DIR / "knowledge_base"
 VECTOR_DB_PATH = BASE_DIR / "vector_store" / "chroma_db"
 
