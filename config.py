@@ -45,3 +45,9 @@ MAX_NEW_TOKENS = 512
 
 RETRIEVAL_K = 15
 RERANK_TOP_K = 7
+
+
+# Reranker batch size
+# batch_size is set to 16 by convention , usually powers of 2 (8,16,32,64...)
+
+RERANK_BATCH_SIZE = 16
