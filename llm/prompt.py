@@ -1,3 +1,6 @@
+from utils.context_formatter import format_history
+
+
 def get_system_prompt():
 
     system_prompt = """
@@ -16,15 +19,14 @@ def get_system_prompt():
 
 
 
-def get_user_prompt(question: str, context: str, history: str | None = None) -> str:
+def get_user_prompt(question: str, context: str, history: list[dict] | None = None) -> str:
 
     history_section = ""
     
     if history:
         history_section = f"""
         Conversation History:
-        {history}
-
+        {format_history(history)}
         """
 
     user_prompt = f"""

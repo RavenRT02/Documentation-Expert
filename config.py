@@ -51,3 +51,12 @@ RERANK_TOP_K = 7
 # batch_size is set to 16 by convention , usually powers of 2 (8,16,32,64...)
 
 RERANK_BATCH_SIZE = 16
+
+
+# Role labels for history formatter
+
+ROLE_LABELS = {
+    "user" : "User",
+    "assistant" : "Assistant",
+    "summary" : "Conversation Summary"
+}

@@ -1,4 +1,5 @@
 from langchain_core.documents import Document
+from config import ROLE_LABELS
 
 def format_context(documents: list[Document]) -> str:
     """
@@ -18,3 +19,20 @@ def format_context(documents: list[Document]) -> str:
 
     seperator = "\n\n" + "-" * 60 + "\n\n"
     return seperator.join(parts)
+
+
+
+def format_history(history: list[dict]) -> str:
+    """
+    Formats conversations from list[dict] to str
+    and arrange them in llm-friendly format
+    """
+
+    lines = []
+
+    for message in history:
+        lines.append(f'{ROLE_LABELS[message["role"]]}:')
+        lines.append(f'{ROLE_LABELS[message["content"]]}:')
+        lines.append("")
+
+    return "\n".join(lines)
