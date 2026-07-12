@@ -60,3 +60,8 @@ ROLE_LABELS = {
     "assistant" : "Assistant",
     "summary" : "Conversation Summary"
 }
+
+
+# Turns before summarizing ( 1 turn - user quesstion + assistant response )
+
+CONVERSATION_SUMMARY_TURNS = 10
