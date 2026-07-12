@@ -1,7 +1,7 @@
 from utils.context_formatter import format_history
 
 
-def get_conversation_summary_prompt(active_messages):
+def build_conversation_summary_prompt(active_messages):
     
     system_prompt = f"""
     INSTRUCTIONS :
