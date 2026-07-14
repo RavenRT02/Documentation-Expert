@@ -1,4 +1,4 @@
-from utils.context_formatter import format_history
+from utils.formatter import format_history
 
 
 def build_conversation_summary_prompt(active_messages):

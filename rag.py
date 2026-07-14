@@ -5,7 +5,7 @@ from llm.model import load_model, generate_response
 from llm.prompt import get_system_prompt, get_user_prompt
 from llm.conversations import should_summarize, archive_messages, build_history
 from llm.conversation_summary_prompt import build_conversation_summary_prompt
-from utils.context_formatter import format_context
+from utils.formatter import format_context
 from config import LLM_MODEL, RETRIEVAL_K, RERANK_TOP_K, RERANKER_MODEL
 
 
@@ -22,6 +22,16 @@ class RAGPipeline:
         self.reranker = load_reranker(RERANKER_MODEL)
         self.summaries = []
         self.active_messages = []
+
+    
+    def reset_conversation(self):
+        """
+        Clears chat conversation by clearning active_messages
+        and summaries
+        """
+
+        self.active_messages.clear()
+        self.summaries.clear()
 
     
     def ask(self, question: str, libraries: list[str] | None = None):
