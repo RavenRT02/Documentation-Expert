@@ -2,10 +2,10 @@ from rag import RAGPipeline
 from ui.interface import create_interface
 
 
-def main():
+def main(db_path: str | None = None):
 
     # Initialize RAG pipeline
-    pipeline = RAGPipeline()
+    pipeline = RAGPipeline(db_path=db_path)
 
     # Build UI
     gradio_app = create_interface(pipeline=pipeline)
