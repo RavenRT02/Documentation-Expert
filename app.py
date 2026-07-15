@@ -11,7 +11,7 @@ def main(db_path: str | None = None):
     gradio_app = create_interface(pipeline=pipeline)
 
     # Launch app
-    gradio_app.launch()
+    gradio_app.launch(debug=True)
 
 
 if __name__ == '__main__':

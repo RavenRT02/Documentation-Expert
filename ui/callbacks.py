@@ -10,7 +10,12 @@ def chat(pipeline, question, libraries, chat_history):
         return chat_history, chat_history, ""
 
     # call rag pipeline and store just the response key's value of returned dict from ask()
-    result = pipeline.ask(question=question, libraries=libraries)
+    try :
+        result = pipeline.ask(question=question, libraries=libraries)
+    except Exception as e:
+        print(e)
+        raise
+    
     assistant_response = result["response"]
 
     # Add user question to chat_history, chat_history is completely for UI no relation with backend

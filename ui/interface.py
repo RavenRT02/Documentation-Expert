@@ -27,7 +27,7 @@ def create_interface(pipeline):
         with gr.Row():
 
             # not ChatInterface since we need to add libray selection, buttons, etc
-            chatbox = gr.Chatbot(height=600)
+            chatbox = gr.Chatbot(height=600, type="messages")
             
         with gr.Row():
 
