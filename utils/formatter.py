@@ -33,7 +33,7 @@ def format_history(history: list[dict]) -> str:
     # ROLE_LABELS since we change summary to Conversation Summary, not just capitalize
     for message in history:
         lines.append(f'{ROLE_LABELS[message["role"]]}:')
-        lines.append(f'{ROLE_LABELS[message["content"]]}:')
+        lines.append(message["content"])
         lines.append("")
 
     return "\n".join(lines)
