@@ -93,7 +93,9 @@ def generate_response(tokenizer, model, messages, max_new_tokens=MAX_NEW_TOKENS)
     # tokenizer.apply_chat_template takes the messages and modifies it to a structure with additional tokens that 
     # the chosen model can understand and the returned python list is converted to tensors which the model can use directly
     # return_dict=True provides attention_mask and not just input_ids from tokenizer 
-    inputs = tokenizer.apply_chat_template(messages=messages, tokenize=True, return_dict=True, 
+    # for transformers 4.57.6 conversation=messages or simply messages as first parameter to not get error.
+    # message=messages throws an error.
+    inputs = tokenizer.apply_chat_template(messages, tokenize=True, return_dict=True, 
                                            return_tensors="pt", add_generation_prompt=True)
     
     # Takes k,v in inputs.items(), and turns them into tensor which device can use 
