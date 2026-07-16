@@ -1,5 +1,6 @@
 from langchain_core.documents import Document
 from config import ROLE_LABELS
+import re
 
 def format_context(documents: list[Document]) -> str:
     """
@@ -37,3 +38,20 @@ def format_history(history: list[dict]) -> str:
         lines.append("")
 
     return "\n".join(lines)
+
+
+
+def normalize(question: str) -> str:
+    """
+    Removes white spaces and normalises casing
+    """
+
+    # convert to lower case
+    question = question.lower()
+
+    # match every char other than /w - word chars, /s - white spaces (!,@,#..etc) and replace with ""
+    question = re.sub(r"[^\w\s]", "", question)
+
+    question = "".join(question.split())
+
+    return question

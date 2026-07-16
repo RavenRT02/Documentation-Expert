@@ -6,6 +6,7 @@ from llm.prompt import get_system_prompt, get_user_prompt
 from llm.conversations import should_summarize, archive_messages, build_history
 from llm.conversation_summary_prompt import build_conversation_summary_prompt
 from utils.formatter import format_context
+from utils.greeting import handle_greeting
 from config import LLM_MODEL, RETRIEVAL_K, RERANK_TOP_K, RERANKER_MODEL, CONTEXT_SUFFICIENCY_THRESHOLD
 
 
@@ -40,6 +41,13 @@ class RAGPipeline:
         Performs retrieval, formats retrieved contents and 
         queries llm to answer user question
         """
+
+        # Handle greetings
+
+        greeting = handle_greeting(question=question)
+
+        if greeting is not None:
+            return greeting
         
         # Add user question to conversation list
         self.active_messages.append(

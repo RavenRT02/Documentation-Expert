@@ -70,3 +70,10 @@ CONVERSATION_SUMMARY_TURNS = 10
 # Threashold to be met for the context to reach llm
 
 CONTEXT_SUFFICIENCY_THRESHOLD = 0.10
+
+
+# Greetings
+
+CONVERSATION_STARTERS = {"hi", "hello", "hithere", "hey", "goodmorning", "goodafternoon", "goodevening"}
+
+CONVERSATION_CONCLUDERS = {"thanks", "thankyou", "bye", "goodbye"}
