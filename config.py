@@ -65,3 +65,8 @@ ROLE_LABELS = {
 # Turns before summarizing ( 1 turn - user quesstion + assistant response )
 
 CONVERSATION_SUMMARY_TURNS = 10
+
+
+# Threashold to be met for the context to reach llm
+
+CONTEXT_SUFFICIENCY_THRESHOLD = 0.10

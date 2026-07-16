@@ -6,7 +6,7 @@ from llm.prompt import get_system_prompt, get_user_prompt
 from llm.conversations import should_summarize, archive_messages, build_history
 from llm.conversation_summary_prompt import build_conversation_summary_prompt
 from utils.formatter import format_context
-from config import LLM_MODEL, RETRIEVAL_K, RERANK_TOP_K, RERANKER_MODEL
+from config import LLM_MODEL, RETRIEVAL_K, RERANK_TOP_K, RERANKER_MODEL, CONTEXT_SUFFICIENCY_THRESHOLD
 
 
 class RAGPipeline:
@@ -52,6 +52,16 @@ class RAGPipeline:
         # Retrieve documents, rerank documents and build conversation history
         documents = retrieve(vector_store=self.vector_store, query=question, k= RETRIEVAL_K, libraries=libraries)
         reranked_docs = rerank(reranker=self.reranker, query=question, documents=documents, top_k=RERANK_TOP_K)
+
+        # Checks if the highest scored chunk has more than 10% relevance to user question.
+        # If lower than 10% llm is not called.
+        if reranked_docs[0].metadata["rerank_score"] < CONTEXT_SUFFICIENCY_THRESHOLD:
+
+            return {
+                "response" : "I do not have sufficient context to answer this question",
+                "documents" : reranked_docs
+            }
+
         history = build_history(summaries=self.summaries, active_messages=self.active_messages)
 
         # Format reranked documents for llm
