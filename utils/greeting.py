@@ -7,13 +7,10 @@ def is_greeting(question: str) -> str:
     """
     
     normalized_question = normalize(question=question)
-
-    starter_list = CONVERSATION_STARTERS
-    concluder_list = CONVERSATION_CONCLUDERS
         
-    if normalized_question in starter_list:
+    if normalized_question in CONVERSATION_STARTERS:
         return "starter"
-    elif normalized_question in concluder_list:
+    elif normalized_question in CONVERSATION_CONCLUDERS:
         return "concluder"
     else:
         return "llm"
