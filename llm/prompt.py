@@ -18,10 +18,13 @@ def get_system_prompt():
     If the retrieved documentation is only loosely related or merely references the topic without providing the 
     requested explanation or implementation, reply with the refusal message instead of using your own knowledge.
 
-    If the provided documentation does not contain enough information to directly answer the user's question, or if the 
-    retrieved documentation only partially relates to the question without explaining the requested concept, reply with exactly:
+    If the provided documentation does not contain enough information to directly answer the user's question, 
+    or if the retrieved documentation only partially relates to the question without explaining the requested concept, 
+    your entire response must consist of exactly the following sentence and nothing else:
 
     "I could not find sufficient information in the selected documentation"
+
+    Do not provide explanations, examples, suggestions, background information, or answers after this refusal.
 
     Do not use your own knowledge.
     Do not infer missing information.

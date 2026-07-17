@@ -30,10 +30,10 @@ def rerank(reranker: CrossEncoder, query: str, documents: list[Document], top_k:
     ]
 
     # numpy.ndarray , eg : array([ 7.8234, -3.1142,  6.9017], dtype=float32)
-    # On UI change show_progress_bar=False, just to avoid terminal clutter, with more questions terminal gets filled with progress bar.
+    # set show_progress_bar=True for testing if needed.
     # Using batch_size for efficient inference, without batch size it will perform
     # one forward pass for each document, with batching , one pass for batch_size documents.
-    scores = reranker.predict(pairs, batch_size=RERANK_BATCH_SIZE, show_progress_bar=True) 
+    scores = reranker.predict(pairs, batch_size=RERANK_BATCH_SIZE, show_progress_bar=False) 
 
     # Adding rerank_score metadata to chunks
     for doc, score in zip(documents, scores):
