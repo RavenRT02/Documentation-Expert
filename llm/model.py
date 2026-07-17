@@ -116,4 +116,7 @@ def generate_response(tokenizer, model, messages, max_new_tokens=MAX_NEW_TOKENS)
 
     response = tokenizer.decode(outputs[0][input_length:], skip_special_tokens=True)
 
+    del inputs
+    del outputs
+
     return response.strip()

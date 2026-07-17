@@ -16,6 +16,11 @@ def get_system_prompt():
     If the retrieved documentation is only loosely related, contains matching keywords, examples, greetings, or 
     mentions similar concepts without actually answering the user's question, do not use it to construct an answer.
 
+    The retrieved documentation must explicitly explain or demonstrate the answer to the user's question. 
+    Do not answer based only on matching keywords, example prompts, placeholders, or mentions of a topic. 
+    If the documentation merely references the topic without providing the requested explanation or implementation, 
+    reply with the refusal message instead of using your own knowledge.
+
     If the provided documentation does not contain enough information to directly answer the user's question, reply exactly:
 
     "I could not find sufficient information in the selected documentation"
