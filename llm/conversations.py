@@ -1,4 +1,4 @@
-from config import CONVERSATION_SUMMARY_TURNS
+from config import CONVERSATION_SUMMARY_TURNS, MAX_RECENT_MESSAGE_TURNS
 
 
 def should_summarize(active_messages: list[dict]) -> bool:
@@ -38,3 +38,18 @@ def archive_messages(summaries: list[dict], active_messages: list[dict], summary
     )
 
     active_messages.clear()
+
+
+
+def update_recent_messages(recent_messages: list[dict], messages: list[dict]) -> None:
+    """
+    Stores recent messages for query rewriting, 
+    smaller list, not lost to summarization
+    """
+
+    recent_messages.extend(messages)
+
+    max_messages = MAX_RECENT_MESSAGE_TURNS * 2  # since 1 turn = 2 messages ( user + assistant )
+
+    if len(recent_messages) > max_messages:
+        del recent_messages[:-max_messages]

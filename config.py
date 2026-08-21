@@ -27,7 +27,7 @@ VECTOR_DB_PATH = BASE_DIR / "vector_store" / "chroma_db"
 # Models
 
 EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
-LLM_MODEL = "Qwen/Qwen2.5-7B-Instruct"
+LLM_MODEL = "Qwen/Qwen2.5-3B-Instruct"
 RERANKER_MODEL = "BAAI/bge-reranker-base"
 
 
@@ -65,6 +65,7 @@ ROLE_LABELS = {
 # Turns before summarizing ( 1 turn - user quesstion + assistant response )
 
 CONVERSATION_SUMMARY_TURNS = 10
+MAX_RECENT_MESSAGE_TURNS = 3
 
 
 # Threashold to be met for the context to reach llm
