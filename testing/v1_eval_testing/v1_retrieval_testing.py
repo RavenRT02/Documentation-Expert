@@ -8,8 +8,12 @@ from retrieval.reranker import load_reranker, rerank
 # Initial test data path
 # OUTPUT_PATH = BASE_DIR / "testing" / "v1_eval_testing" / "reports" / "retrieval_eval.md"
 
+
 # Intense test data path
-OUTPUT_PATH = BASE_DIR / "testing" / "v1_eval_testing" / "reports" / "retrieval_intense_eval.md"
+# OUTPUT_PATH = BASE_DIR / "testing" / "v1_eval_testing" / "reports" / "retrieval_intense_eval.md"
+
+# Additional testing test path 
+OUTPUT_PATH = BASE_DIR / "testing" / "v1_eval_testing" / "reports" / "additional_test.md"
 
 
 # 1. Valid documentation questions (should retrieve good context)
@@ -187,6 +191,10 @@ def write_section(file, title: str, documents: list[Document]):
     file.write("\n---\n\n")
 
 
+QUESTIONS_NEW = ["what is dict comprehension ?", 
+                 "what is list comprehension ?", 
+                 "what is dictionary comprehension ?"]
+
 def main():
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -201,7 +209,7 @@ def main():
 
         report.write(f"- Rerank Top K: {RERANK_TOP_K}\n\n")
 
-        for index, question in enumerate(QUESTIONS, start=1):
+        for index, question in enumerate(QUESTIONS_NEW, start=1):
 
             print(f"[{index}/{len(QUESTIONS)}] {question}")
 
