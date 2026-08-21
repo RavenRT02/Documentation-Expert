@@ -2,12 +2,15 @@ from ingestion.embedding.vector_store import load_vector_store
 from retrieval.retriever import retrieve
 from retrieval.reranker import load_reranker, rerank
 from llm.model import load_model, generate_response
-from llm.prompt import get_system_prompt, get_user_prompt
-from llm.conversations import should_summarize, archive_messages, build_history
+from llm.response_prompt import get_system_prompt, get_user_prompt
+from llm.conversations import should_summarize, archive_messages, build_history, update_recent_messages
 from llm.conversation_summary_prompt import build_conversation_summary_prompt
+from llm.query_rewriter import rewrite_query
 from utils.formatter import format_context
 from utils.greeting import handle_greeting
+from utils.message_builder import build_messages
 from config import LLM_MODEL, RETRIEVAL_K, RERANK_TOP_K, RERANKER_MODEL, CONTEXT_SUFFICIENCY_THRESHOLD
+
 
 
 class RAGPipeline:
@@ -23,6 +26,7 @@ class RAGPipeline:
         self.reranker = load_reranker(RERANKER_MODEL)
         self.summaries = []
         self.active_messages = []
+        self.recent_messages = []
 
     
     def reset_conversation(self):
@@ -32,6 +36,7 @@ class RAGPipeline:
         """
 
         self.active_messages.clear()
+        self.recent_messages.clear()
         self.summaries.clear()
 
     
@@ -48,18 +53,28 @@ class RAGPipeline:
 
         if greeting is not None:
             return greeting
+
+        # building history - before appending current question so history is does not repeat question in user prompt
+        history = build_history(summaries=self.summaries, active_messages=self.active_messages)
+
+        # build recent messages history
+        recent_messages = self.recent_messages.copy()
+
+        # query re-writing - handles 1st question without llm call inside rewrite_query 
+        retrieval_query = rewrite_query(tokenizer=self.tokenizer, model=self.model, 
+                                        current_question=question, recent_messages=recent_messages)
         
         # Add user question to conversation list
-        self.active_messages.append(
-            {
-                "role" : "user",
-                "content" : question
-            }
-        )
+        user_question = {
+                            "role" : "user",
+                            "content" : question
+                        }
 
-        # Retrieve documents, rerank documents and build conversation history
-        documents = retrieve(vector_store=self.vector_store, query=question, k= RETRIEVAL_K, libraries=libraries)
-        reranked_docs = rerank(reranker=self.reranker, query=question, documents=documents, top_k=RERANK_TOP_K)
+        self.active_messages.append(user_question)
+
+        # Use re-written query if history list is not zero
+        documents = retrieve(vector_store=self.vector_store, query=retrieval_query, k=RETRIEVAL_K, libraries=libraries)
+        reranked_docs = rerank(reranker=self.reranker, query=retrieval_query, documents=documents, top_k=RERANK_TOP_K)
 
         # Checks if the highest scored chunk has more than 10% relevance to user question.
         # If lower than 10% llm is not called.
@@ -70,7 +85,6 @@ class RAGPipeline:
                 "documents" : reranked_docs
             }
 
-        history = build_history(summaries=self.summaries, active_messages=self.active_messages)
 
         # Format reranked documents for llm
         context = format_context(reranked_docs)
@@ -78,40 +92,32 @@ class RAGPipeline:
         # Build messages for response generation
         system_prompt = get_system_prompt()
         user_prompt = get_user_prompt(question=question, context=context, history=history)
-        
-        response_messages = [
-            {
-                "role" : "system",
-                "content" : system_prompt
-            },
-            {
-                "role" : "user",
-                "content" : user_prompt
-            }
-        ]
+
+        # build messages for llm
+        response_messages = build_messages(system_prompt=system_prompt, user_prompt=user_prompt)
 
         # call llm
         llm_response = generate_response(self.tokenizer, self.model, messages=response_messages)
 
         # Add llm response to conversation list
-        self.active_messages.append(
-            {
-                "role" : "assistant",
-                "content" : llm_response
-            }
-        )
+        assistant_response = {
+                                "role" : "assistant",
+                                "content" : llm_response
+                             }
+
+        self.active_messages.append(assistant_response)
+
+        # update recent messages list 
+        update_recent_messages(recent_messages=self.recent_messages, messages=[user_question, assistant_response])
 
         # Summarize conversation history 
         if should_summarize(active_messages=self.active_messages):
 
             # Build messages for summarization
             summary_prompt = build_conversation_summary_prompt(self.active_messages)
-            summary_messages = [
-                {
-                    "role" : "system",
-                    "content" : summary_prompt
-                }
-            ]
+            summary_messages = build_messages(system_prompt=summary_prompt)
+
+            # llm call and archiving
             summary = generate_response(self.tokenizer, self.model, messages=summary_messages)
             archive_messages(summaries=self.summaries, active_messages=self.active_messages, summary=summary)
         

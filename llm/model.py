@@ -6,7 +6,6 @@ import torch
 from huggingface_hub import login
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from config import MAX_NEW_TOKENS
-from llm.prompt import get_system_prompt, get_user_prompt
 
 
 def login_huggingface(token=None):
