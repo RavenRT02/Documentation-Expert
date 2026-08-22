@@ -12,6 +12,7 @@ Instead of relying on the language model's internal knowledge, the system retrie
   - Python
   - Pandas
   - LangChain
+- Query rewriting
 - Dense vector retrieval using ChromaDB
 - Cross-Encoder reranking
 - Metadata-based library filtering
@@ -48,12 +49,15 @@ Instead of relying on the language model's internal knowledge, the system retrie
               Library Selection Filter
                           │
                           ▼
+                   Query Rewriting
+                          │
+                          ▼
                  Dense Vector Retrieval
                     (ChromaDB + BGE)
                           │
                           ▼
-             Cross-Encoder Reranker
-             (BAAI/bge-reranker-base)
+                Cross-Encoder Reranker
+               (BAAI/bge-reranker-base)
                           │
                           ▼
              Context Sufficiency Check
@@ -75,11 +79,12 @@ Instead of relying on the language model's internal knowledge, the system retrie
 # Pipeline
 
 1. User selects one or more documentation libraries.
-2. The retriever searches the Chroma vector database.
-3. Top retrieval results are reranked using a Cross-Encoder.
-4. Retrieved context is checked for sufficiency.
-5. If sufficient, the LLM answers using only the retrieved documentation.
-6. Otherwise, the system refuses to answer instead of hallucinating.
+2. User question and recent turns are passed to llm for query rewriting.
+3. The retriever searches the Chroma vector database.
+4. Top retrieval results are reranked using a Cross-Encoder.
+5. Retrieved context is checked for sufficiency.
+6. If sufficient, the LLM answers using only the retrieved documentation.
+7. Otherwise, the system refuses to answer instead of hallucinating.
 
 ---
 
@@ -109,6 +114,16 @@ Instead of relying on the language model's internal knowledge, the system retrie
 
 ---
 
+## Query Rewriting
+
+> System handles follow up question with insufficient context with query rewriting.
+
+![Query Rewriting](assets/recent_question.png)
+
+![Query Rewriting](assets/follow_up_question.png)
+
+---
+
 # Dataset Statistics
 
 | Metric | Value |
@@ -128,6 +143,7 @@ Instead of relying on the language model's internal knowledge, the system retrie
 - Modular architecture
 - Separate retrieval, reranking, generation and UI
 - Conversation summarization for long chats
+- Recent messages for query rewriting context
 - Strict refusal when context is insufficient
 
 ---
@@ -136,13 +152,12 @@ Instead of relying on the language model's internal knowledge, the system retrie
 
 - Source citations
 - Hybrid Search (BM25 + Dense Retrieval)
-- Query rewriting
 - Multi-query retrieval
 - Streaming responses
 
 ---
 
-# Installation
+# Installation (Local)
 
 ```bash
 git clone <repo-url>
@@ -152,15 +167,26 @@ cd Documentation-Expert
 pip install -r requirements.txt
 ```
 
-Build the knowledge base and vector database before launching the application.
+- Build the knowledge base and vector database before launching the application.
+- Knowledge base - Refer ingestion/build_kb/README.md.
+- Vectorstore - Refer ingestion/build_vector_store.py comments.
 
 ---
 
-# Run
+# Run (Local)
 
 ```bash
 python app.py
 ```
+
+---
+
+# Run (Colab)
+
+1. Download the notebook (raw file) from - https://github.com/RavenRT02/Documentation-Expert/blob/main/colab_app.ipynb
+2. Upload file to google drive
+3. Open file in drive to open it in google colab
+4. Follow instructions to run
 
 ---
 
