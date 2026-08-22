@@ -12,7 +12,7 @@ from retrieval.reranker import load_reranker, rerank
 # Intense test data path
 # OUTPUT_PATH = BASE_DIR / "testing" / "v1_eval_testing" / "reports" / "retrieval_intense_eval.md"
 
-# Additional testing test path 
+# Additional testing test path - for 3B model results
 OUTPUT_PATH = BASE_DIR / "testing" / "v1_eval_testing" / "reports" / "additional_test.md"
 
 

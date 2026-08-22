@@ -27,7 +27,7 @@ VECTOR_DB_PATH = BASE_DIR / "vector_store" / "chroma_db"
 # Models
 
 EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
-LLM_MODEL = "Qwen/Qwen2.5-3B-Instruct"
+LLM_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 RERANKER_MODEL = "BAAI/bge-reranker-base"
 
 

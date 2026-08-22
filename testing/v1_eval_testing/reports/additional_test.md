@@ -1596,7 +1596,8 @@ easy to use, although it offers much less control for formatting.
 
 ## Observation
 
-_Write your observations here._
+Retieval quality is good. The 3B qwen model is struggling to keep uo with the instructions
+and retuns insufficient context. Switching back to 7B model.
 
 ============================================================
 

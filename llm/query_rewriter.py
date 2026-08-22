@@ -13,7 +13,7 @@ def rewrite_query(tokenizer, model, current_question: str, recent_messages: list
         return current_question
 
     system_prompt = get_system_prompt()
-    user_prompt = get_user_prompt(current_question=current_question, history=recent_messages)
+    user_prompt = get_user_prompt(current_question=current_question, recent_messages=recent_messages)
 
     messages = build_messages(system_prompt=system_prompt, user_prompt=user_prompt)
 
