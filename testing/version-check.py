@@ -17,6 +17,7 @@ packages = [
     "huggingface_hub",
     "bitsandbytes",
     "accelerate",
+    "openai"
 ]
 
 for pkg in packages:
