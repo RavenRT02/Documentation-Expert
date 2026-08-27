@@ -9,7 +9,7 @@ from llm.query_rewriter import rewrite_query
 from utils.formatter import format_context
 from utils.greeting import handle_greeting
 from utils.message_builder import build_messages
-from config import LLM_MODEL, RETRIEVAL_K, RERANK_TOP_K, RERANKER_MODEL, CONTEXT_SUFFICIENCY_THRESHOLD
+from config import RETRIEVAL_K, RERANK_TOP_K, RERANKER_MODEL, CONTEXT_SUFFICIENCY_THRESHOLD
 
 
 

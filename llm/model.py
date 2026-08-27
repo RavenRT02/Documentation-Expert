@@ -10,7 +10,7 @@ from config import MAX_NEW_TOKENS
 
 def login_huggingface(token=None):
     """
-    Authenticate with Hugging Face.
+    Authenticate with Hugging Face. Not required for Qwen2.5.
 
     If a token is provided, it is used directly (colab secrets).
     Otherwise, the function attempts to load HF_TOKEN from a local .env file.

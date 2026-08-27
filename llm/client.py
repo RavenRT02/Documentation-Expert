@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
-from llm.model import login_huggingface, load_model, generate_response
+from llm.model import load_model, generate_response
 from config import LLM_PROVIDER, LLM_MODEL
 
 
@@ -16,10 +16,11 @@ class LocalLLM:
 
     def __init__(self, model_name: str):
         """
-        Login to hugginfac to load tokenizer and model
+        Load tokenizer and model
         """
 
-        login_huggingface()
+        # In case of using a gated/private model instead of qwen and similar models, 
+        # login_huggingface() can be imported from llm/models and used here replacing this line for login.
         self.tokenizer, self.model = load_model(model_name=model_name)
 
     def generate(self, messages: list[dict]) -> str:
