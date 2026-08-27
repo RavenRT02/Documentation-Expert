@@ -40,6 +40,12 @@ Instead of relying on the language model's internal knowledge, the system retrie
 
 ---
 
+# Note
+
+Hugging Face authentication: The project does not require an HF token for downloading the public models used by default. If you use a gated/private model, authenticate with Hugging Face before initializing the RAG pipeline. In Google Colab, the token can be supplied through Colab Secrets rather than storing credentials in the repository.
+
+---
+
 # System Architecture
 
 ```text
