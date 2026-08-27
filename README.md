@@ -122,11 +122,21 @@ Hugging Face authentication: The project does not require an HF token for downlo
 
 ## Query Rewriting
 
-> System handles follow up question with insufficient context with query rewriting.
+> System handles follow up question with query rewriting.
 
 ![Query Rewriting](assets/recent_question.png)
 
 ![Query Rewriting](assets/follow_up_question.png)
+
+---
+
+## gpt model answer
+
+> Response from gpt model 
+
+![gpt model response](assets/gpt_answer.png)
+
+![gpt model follow up](assets/gpt_follow_up.png)
 
 ---
 

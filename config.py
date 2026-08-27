@@ -26,8 +26,14 @@ VECTOR_DB_PATH = BASE_DIR / "vector_store" / "chroma_db"
 
 # Models
 
-LLM_PROVIDER = "local"                   # change to openai for api call
-LLM_MODEL = "Qwen/Qwen2.5-7B-Instruct"   # change model name accordingly
+LLM_PROVIDER = "local"                   
+LLM_MODEL = "Qwen/Qwen2.5-7B-Instruct"   
+
+
+# For API calls
+
+# LLM_PROVIDER = "openai"             
+# LLM_MODEL = "gpt-4.1-mini"   
 
 EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 RERANKER_MODEL = "BAAI/bge-reranker-base"
