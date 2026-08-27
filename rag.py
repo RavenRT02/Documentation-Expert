@@ -1,7 +1,7 @@
 from ingestion.embedding.vector_store import load_vector_store
 from retrieval.retriever import retrieve
 from retrieval.reranker import load_reranker, rerank
-from llm.model import load_model, generate_response
+from llm.client import load_llm
 from llm.response_prompt import get_system_prompt, get_user_prompt
 from llm.conversations import should_summarize, archive_messages, build_history, update_recent_messages
 from llm.conversation_summary_prompt import build_conversation_summary_prompt
@@ -21,7 +21,7 @@ class RAGPipeline:
         model and vector_store
         """
 
-        self.tokenizer, self.model = load_model(LLM_MODEL)
+        self.llm = load_llm()
         self.vector_store = load_vector_store(db_path)
         self.reranker = load_reranker(RERANKER_MODEL)
         self.summaries = []
@@ -61,8 +61,7 @@ class RAGPipeline:
         recent_messages = self.recent_messages.copy()
 
         # query re-writing - handles 1st question without llm call inside rewrite_query 
-        retrieval_query = rewrite_query(tokenizer=self.tokenizer, model=self.model, 
-                                        current_question=question, recent_messages=recent_messages)
+        retrieval_query = rewrite_query(llm=self.llm, current_question=question, recent_messages=recent_messages)
         
         # Add user question to conversation list
         user_question = {
@@ -97,7 +96,7 @@ class RAGPipeline:
         response_messages = build_messages(system_prompt=system_prompt, user_prompt=user_prompt)
 
         # call llm
-        llm_response = generate_response(self.tokenizer, self.model, messages=response_messages)
+        llm_response = self.llm.generate(messages=response_messages)
 
         # Add llm response to conversation list
         assistant_response = {
@@ -118,7 +117,7 @@ class RAGPipeline:
             summary_messages = build_messages(system_prompt=summary_prompt)
 
             # llm call and archiving
-            summary = generate_response(self.tokenizer, self.model, messages=summary_messages)
+            summary = self.llm.generate(messages=summary_messages)
             archive_messages(summaries=self.summaries, active_messages=self.active_messages, summary=summary)
         
         return {
