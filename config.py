@@ -28,12 +28,20 @@ VECTOR_DB_PATH = BASE_DIR / "vector_store" / "chroma_db"
 
 LLM_PROVIDER = "local"                   
 LLM_MODEL = "Qwen/Qwen2.5-7B-Instruct"   
+LLM_BASE_URL = None
 
 
 # For API calls
 
-# LLM_PROVIDER = "openai"             
+# LLM_PROVIDER = "api"             
 # LLM_MODEL = "gpt-4.1-mini"   
+# LLM_BASE_URL = None             # Replace with url for providers other than openai  
+
+
+# LLM_PROVIDER = "api"             
+# LLM_MODEL = "gemini-3.6-flash"   
+# LLM_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+
 
 EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 RERANKER_MODEL = "BAAI/bge-reranker-base"
